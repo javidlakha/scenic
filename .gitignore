@@ -170,5 +170,9 @@ wandb/
 # Model weights
 scenic/projects/boundary_attention/pretrained_weights
 
+# Datasets
+scenic/projects/boundary_attention/kaleidoshapes_dataset/
+
 # Outputs
 scenic/projects/boundary_attention/workdir/
+gpu_usage.csv
