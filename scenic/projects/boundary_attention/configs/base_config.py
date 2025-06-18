@@ -117,6 +117,7 @@ def get_config(
   config.checkpoint_steps = int(config.checkpoint_steps_per_device)
   config.debug_train = False  # debug mode during training
   config.debug_eval = False  # debug mode during eval
+  config.count_flops = False
 
   # Visualization config.
   config.viz_utils = ml_collections.ConfigDict()

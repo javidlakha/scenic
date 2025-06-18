@@ -269,8 +269,17 @@ def get_viz_dict_from_batch(batch, model_outputs, model, name,
           fig.canvas.draw()
           plt.close(fig)
 
-          data = jnp.frombuffer(fig.canvas.tostring_rgb(), dtype=jnp.uint8)
-          data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+          # Fix for newer matplotlib versions
+          try:
+              # Try the old method first
+              data = jnp.frombuffer(fig.canvas.tostring_rgb(), dtype=jnp.uint8)
+              data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+          except AttributeError:
+              # Use the new method for newer matplotlib versions
+              data = jnp.frombuffer(fig.canvas.buffer_rgba(), dtype=jnp.uint8)
+              data = data.reshape(fig.canvas.get_width_height()[::-1] + (4,))
+              # Convert RGBA to RGB by dropping the alpha channel
+              data = data[..., :3]
 
           all_data.append(data)
 
